@@ -23,3 +23,21 @@ export async function createUser(username, password) {
   delete user.password;
   return user;
 }
+
+export async function getUserByUsername(username, password) {
+  const sql = `
+    SELECT * FROM users
+    WHERE username = $1;
+  `;
+
+  const {
+    rows: [user],
+  } = await db.query(sql, [username]);
+  if (!user) return null;
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) return null;
+
+  delete user.password;
+  return user;
+}

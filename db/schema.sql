@@ -29,5 +29,7 @@ CREATE TABLE orders_products(
     REFERENCES orders(id) ON DELETE CASCADE,
   product_id INT NOT NULL
     REFERENCES products(id) ON DELETE CASCADE,
-  quantity INT NOT NULL
+  quantity INT NOT NULL,
+  -- composite primary key
+  PRIMARY KEY (order_id, product_id)
 );
