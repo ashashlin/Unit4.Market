@@ -14,7 +14,6 @@ export async function createProduct(title, description, price) {
     )
     RETURNING *;
   `;
-
   const {
     rows: [product],
   } = await db.query(sql, [title, description, price]);
@@ -26,7 +25,6 @@ export async function getProducts() {
   const sql = `
     SELECT * FROM products;
   `;
-
   const { rows: products } = await db.query(sql);
 
   return products;
@@ -37,10 +35,22 @@ export async function getProductById(id) {
     SELECT * FROM products
     WHERE id = $1;
   `;
-
   const {
     rows: [product],
   } = await db.query(sql, [id]);
 
   return product;
+}
+
+export async function getProductsByOrderId(orderId) {
+  const sql = `
+    SELECT p.*
+    FROM orders_products op
+    JOIN products p
+      ON op.product_id = p.id
+    WHERE op.order_id = $1;
+  `;
+  const { rows: products } = await db.query(sql, [orderId]);
+
+  return products;
 }

@@ -14,7 +14,6 @@ export async function createOrderProduct(orderId, productId, quantity) {
     )
     RETURNING *;
   `;
-
   const {
     rows: [orderProduct],
   } = await db.query(sql, [orderId, productId, quantity]);

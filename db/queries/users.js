@@ -13,7 +13,6 @@ export async function createUser(username, password) {
     )
     RETURNING *;
   `;
-
   const hashedPassword = await bcrypt.hash(password, 10);
   const {
     rows: [user],
@@ -29,7 +28,6 @@ export async function getUserByUsername(username, password) {
     SELECT * FROM users
     WHERE username = $1;
   `;
-
   const {
     rows: [user],
   } = await db.query(sql, [username]);
@@ -47,7 +45,6 @@ export async function getUserById(id) {
     SELECT * FROM users
     WHERE id = $1;
   `;
-
   const {
     rows: [user],
   } = await db.query(sql, [id]);
