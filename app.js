@@ -1,11 +1,13 @@
 import express from "express";
 import usersRouter from "#api/routes/users";
+import productsRouter from "#api/routes/products";
 
 const app = express();
 
 app.use(express.json());
 
 app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {

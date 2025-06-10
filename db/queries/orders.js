@@ -21,3 +21,18 @@ export async function createOrder(date, userId, note = null) {
 
   return order;
 }
+
+export async function getOrdersByProductId(productId, userId) {
+  const sql = `
+    SELECT o.id
+    FROM orders_products op
+    JOIN orders o
+      ON op.order_id = o.id
+    WHERE op.product_id = $1
+      AND o.user_id = $2;
+  `;
+
+  const { rows: orders } = await db.query(sql, [productId, userId]);
+
+  return orders;
+}
